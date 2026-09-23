@@ -108,8 +108,14 @@ def ai_button(key: str) -> None:
     if not ai_assist.available():
         st.info(f"Hay {n} productos sin clasificar. Configura `LLM_API_KEY` en el archivo `.env` para clasificarlos con IA.")
         return
-    if st.button(f"🤖 Intentar clasificar con IA ({n} sin clasificar)", key=key):
-        ai_classify_ui("unclassified")
+    e = ai_assist.estimate(n)
+    with st.expander(f"🤖 Opcional: proponer categoría con IA para {n} productos sin clasificar"):
+        st.warning(f"⏳ La IA trabaja **por lotes** ({e['batches']} lotes de {e['size']} productos) y puede demorar "
+                   f"**aprox. {e['min']} – {e['max']}**, según la disponibilidad de los modelos gratuitos. "
+                   "Cada lote terminado queda guardado; si se interrumpe, al volver a ejecutar continúa con los pendientes. "
+                   "Todo lo que proponga la IA queda marcado 🤖 y se puede corregir a mano.")
+        if st.button("Clasificar con IA", key=key):
+            ai_classify_ui("unclassified")
 
 
 tax = load_config("taxonomy.csv")
@@ -449,11 +455,9 @@ elif page == "Cargar datos / IA":
             box.update(label={0: "✅ Archivo procesado", 3: "⚠️ Archivo ya cargado: no se procesó"}.get(res.returncode, "❌ Error al procesar"),
                        state="complete" if res.returncode in (0, 3) else "error")
         refresh()
-        if res.returncode == 0 and ai_assist.cfg()["auto"]:
-            if ai_assist.available():
-                ai_classify_ui("unclassified", source_label=f"'{target}'")
-            else:
-                st.info("IA no configurada (.env sin LLM_API_KEY): los productos sin clasificar quedan en la cola de revisión.")
+        if res.returncode == 0:
+            st.success("Pipeline completo sin IA. Los productos que las reglas no clasificaron quedan en la cola de revisión; "
+                       "la clasificación con IA es opcional: sección 🤖 Asistente IA, más abajo.")
     xl = OUTPUT / "maestro_productos_estandarizado.xlsx"
     if xl.exists():
         st.download_button("⬇️ Descargar Excel del maestro", xl.read_bytes(), file_name=xl.name)
@@ -461,7 +465,7 @@ elif page == "Cargar datos / IA":
     st.divider()
     st.header("🤖 Asistente IA (opcional)")
     c = ai_assist.cfg()
-    st.markdown("La IA **propone** la categoría de los productos que las reglas no clasificaron (y, si se pide, marca / modelo / "
+    st.markdown("**Opcional.** El pipeline funciona completo sin IA. La IA **propone** la categoría de los productos que las reglas no clasificaron (y, si se pide, marca / modelo / "
                 "atributo donde están vacíos). Todo lo que completa queda marcado como 🤖 IA y se corrige a mano en *Revisar y editar*.")
     st.markdown(f"**Modelos (orden de uso / fallback):** {', '.join(c['models']) or '—'}  \n"
                 f"**Reintento:** {c['retries']} vez tras {c['retry_delay']:g} s por modelo · **Lote:** {c['batch']} productos")
@@ -479,6 +483,9 @@ elif page == "Cargar datos / IA":
         st.write(f"Productos pendientes para IA: **{len(pend):,}**")
         if len(pend):
             lim = st.number_input("Máximo a procesar ahora", 1, len(pend), min(200, len(pend)), step=25)
+            e = ai_assist.estimate(int(lim))
+            st.warning(f"⏳ Se procesa por lotes: {e['batches']} lotes de {e['size']} productos, aprox. {e['min']} – {e['max']}. "
+                       "Cada lote terminado queda guardado aunque el proceso se interrumpa.")
             if st.button("🤖 Ejecutar IA y aplicar"):
                 ai_classify_ui(scope, limit=int(lim))
     ai = store.read_table("ai_suggestions")

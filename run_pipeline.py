@@ -1,7 +1,8 @@
 """Pipeline: nueva información -> registro/verificación del archivo -> limpieza -> país -> consolidación en base acumulada
    -> clasificación -> código global / nombre / duplicados -> BD (Supabase o SQLite) + Excel -> IA opcional.
 
-Uso:  python run_pipeline.py [archivo.xlsx] [--force] [--no-ai] [--user NOMBRE]
+Uso:  python run_pipeline.py [archivo.xlsx] [--force] [--ai] [--user NOMBRE]
+      El pipeline NO usa IA por defecto. --ai (o LLM_AUTO_CLASSIFY=true) la ejecuta al final, por lotes (puede demorar).
       python run_pipeline.py --reprocess        (recalcula pasos 3-7 desde la base acumulada; aplica IA / ediciones)
 Códigos de salida: 0 ok · 3 archivo ya cargado · 1 error
 """
@@ -24,6 +25,12 @@ def derive(base, source_file: str = "") -> None:
 def main(args):
     t = time.time()
     print(f"== Pipeline de estandarización de productos RLA (BD: {store.backend()}) ==")
+    if "--reprocess-ai" in args:
+        res = ai_assist.run(scope="unclassified")
+        if res["saved"]:
+            derive(step2b_merge.current_base(), "reproceso IA")
+        print(f"== Listo en {time.time()-t:.0f} s ==")
+        return 0 if res["ok"] else 1
     if "--reprocess" in args:
         derive(step2b_merge.current_base(), "reproceso")
         print(f"== Listo en {time.time()-t:.0f} s ==")
@@ -43,10 +50,20 @@ def main(args):
     base, stats = step2b_merge.run(df, path, user=user, force=True)
     derive(base, path.name)
 
-    if "--no-ai" not in args and ai_assist.cfg()["auto"]:
+    use_ai = ("--ai" in args or ai_assist.cfg()["auto"]) and "--no-ai" not in args
+    if not use_ai:
+        pend = len(ai_assist.pending("unclassified"))
+        if pend:
+            e = ai_assist.estimate(pend)
+            print(f"[IA] Opcional: {pend} productos quedaron sin clasificar (cola de revisión). Para proponerlos con IA: "
+                  f"python run_pipeline.py --reprocess-ai  ({e['batches']} lotes de {e['size']}, aprox. {e['min']} - {e['max']}).")
+    if use_ai:
         if not ai_assist.available():
             print("[IA] IA no configurada (.env sin LLM_API_KEY): se omite la clasificación con IA.")
         else:
+            pend = len(ai_assist.pending("unclassified"))
+            e = ai_assist.estimate(pend)
+            print(f"[IA] Clasificando {pend} productos en {e['batches']} lotes de {e['size']} (puede demorar {e['min']} - {e['max']})...")
             res = ai_assist.run(scope="unclassified")
             if not res["ok"]:
                 print(f"⚠️ El archivo '{path.name}' no se pudo analizar con IA. Los productos sin clasificar quedan en la cola de revisión.")

@@ -42,8 +42,20 @@ def cfg() -> dict:
         "retries": int(os.environ.get("LLM_RETRIES_PER_MODEL", "1")),
         "timeout": float(os.environ.get("LLM_TIMEOUT_SECONDS", "60")),
         "batch": int(os.environ.get("LLM_BATCH_SIZE", "25")),
-        "auto": os.environ.get("LLM_AUTO_CLASSIFY", "true").lower() == "true",
+        "auto": os.environ.get("LLM_AUTO_CLASSIFY", "false").lower() == "true",
     }
+
+
+SECONDS_PER_BATCH = (10, 40)  # rango observado típico en modelos gratuitos (depende de la carga del proveedor)
+
+
+def estimate(n: int) -> dict:
+    """Lotes y tiempo aproximado para n productos."""
+    size = max(1, cfg()["batch"])
+    batches = (n + size - 1) // size
+    lo, hi = batches * SECONDS_PER_BATCH[0], batches * SECONDS_PER_BATCH[1]
+    fmt = lambda s: f"{s // 60} min {s % 60:02d} s" if s >= 60 else f"{s} s"  # noqa: E731
+    return {"batches": batches, "size": size, "min": fmt(lo), "max": fmt(hi)}
 
 
 def available() -> bool:

@@ -71,8 +71,8 @@ flowchart LR
     E --> F[3 · Clasificación<br/>Familia > Categoría]
     F --> G[4 · Código global<br/>5 · Nombre estándar<br/>6 · Duplicados]
     G --> H[7 · Publicación<br/>BD + Excel]
-    H --> I[IA opcional<br/>solo lo no clasificado]
-    I --> F
+    H -. opcional, a pedido .-> I[IA por lotes<br/>solo lo no clasificado]
+    I -.-> F
     H --> J[App Streamlit<br/>buscar · revisar · editar · crear · exportar]
     J -- decisiones manuales --> K[(Tablas persistentes)]
     K --> F
@@ -150,7 +150,8 @@ Opciones del pipeline:
 | `python run_pipeline.py` | Procesa el `.xlsx` más reciente de `data/input/` |
 | `python run_pipeline.py ruta/archivo.xlsx` | Procesa un archivo específico |
 | `python run_pipeline.py --force` | Reprocesa aunque el archivo ya se haya cargado (no duplica filas) |
-| `python run_pipeline.py --no-ai` | No intenta clasificar con IA al final |
+| `python run_pipeline.py --ai` | Al final, clasifica con IA lo que las reglas no resolvieron (opcional; por lotes, puede demorar) |
+| `python run_pipeline.py --reprocess-ai` | Ejecuta solo la IA sobre los pendientes y aplica sus propuestas (sin cargar archivo) |
 | `python run_pipeline.py --user NOMBRE` | Registra quién hizo la carga |
 | `python run_pipeline.py --reprocess` | Recalcula los pasos 3–7 desde la base acumulada (aplica ediciones manuales y sugerencias de IA sin cargar archivo) |
 
@@ -173,7 +174,7 @@ No hay claves escritas en el código: todo se lee desde variables de entorno.
 | `LLM_RETRIES_PER_MODEL` | Reintentos por modelo antes de pasar al siguiente | `1` |
 | `LLM_TIMEOUT_SECONDS` | Tiempo máximo por llamada | `60` |
 | `LLM_BATCH_SIZE` | Productos por llamada al modelo | `25` |
-| `LLM_AUTO_CLASSIFY` | Si es `true`, al cargar un archivo se intenta clasificar con IA lo que las reglas no resolvieron | `true` |
+| `LLM_AUTO_CLASSIFY` | Si es `true`, cada carga termina con la IA automáticamente. Por defecto `false`: el pipeline corre completo **sin IA** y la IA se ejecuta a pedido | `false` |
 
 Las variables definidas en el sistema (por ejemplo, *Secrets* de Streamlit Cloud) tienen prioridad sobre `.env`.
 
@@ -318,9 +319,12 @@ Reemplaza en la base de datos las tablas derivadas (`products`, `product_legacy_
 actualiza `sites`, registra métricas en `run_log` y exporta **`data/output/maestro_productos_estandarizado.xlsx`** con 6 hojas:
 maestro, disponibilidad por país, equivalencias, candidatos a duplicado, cola de revisión y sitios.
 
-### Paso IA (opcional) — `src/ai_assist.py`
-Si hay clave configurada y `LLM_AUTO_CLASSIFY=true`, al final de la carga se envían a la IA **solo los productos sin clasificar**;
-luego se re-ejecutan los pasos 3–7 para aplicar las sugerencias. Detalle en §11.
+### Paso IA (opcional, fuera del pipeline) — `src/ai_assist.py`
+**El pipeline completo funciona sin IA.** Los productos que las reglas no clasifican quedan en la cola de revisión.
+La IA se ejecuta solo a pedido: botón **🤖 Clasificar con IA** en la app, `python run_pipeline.py --ai` / `--reprocess-ai`,
+o automáticamente si `LLM_AUTO_CLASSIFY=true`. Trabaja **por lotes** (25 productos por defecto) y **puede demorar**:
+para ~400 productos son ~17 lotes, aprox. 3 a 11 minutos con modelos gratuitos; la app muestra la estimación antes de empezar.
+Al terminar se re-ejecutan los pasos 3–7 para aplicar las sugerencias. Detalle en §11.
 
 ## 7. Estructura del repositorio y qué hace cada archivo
 
@@ -481,7 +485,7 @@ Si Supabase no responde, basta con `DB_BACKEND=sqlite` para seguir trabajando en
 
 | Sección | Qué permite |
 |---|---|
-| **Resumen** | Indicadores: códigos R2 vs. códigos globales, % clasificado, campos completados por IA, pares de duplicado pendientes, sitios sin país. Gráficos por familia, origen de la clasificación, productos con stock por país y completitud de atributos. Historial de corridas. Botón **🤖 Intentar clasificar con IA** si hay productos sin clasificar. |
+| **Resumen** | Indicadores: códigos R2 vs. códigos globales, % clasificado, campos completados por IA, pares de duplicado pendientes, sitios sin país. Gráficos por familia, origen de la clasificación, productos con stock por país y completitud de atributos. Historial de corridas. Si hay productos sin clasificar: panel opcional **🤖 Clasificar con IA** con advertencia de lotes y tiempo estimado. |
 | **Buscar producto** | Búsqueda por nombre, descripción, código global o código R2, **tolerante a errores de escritura**. Filtros por familia, país con stock, estado y "solo con IA". Ficha del producto: campos con su fuente, códigos R2 equivalentes, disponibilidad por país, detalle por sitio e historial de cambios. **Descargar Excel con los filtros aplicados** (productos, disponibilidad, equivalencias, detalle por sitio opcional y hoja con los filtros usados; con autofiltro). |
 | **Revisar y editar** | Tabla editable de productos pendientes (sin clasificar o con campos de IA), solo IA, sin clasificar o todos. Se puede cambiar categoría (lista desplegable), marca, modelo, atributo clave y nombre. Al guardar, cada cambio queda como **✍️ manual** y se reaplica en futuras cargas. |
 | **Duplicados** | Pares candidatos con puntaje y razones; filtros por puntaje, estado y familia. Se marca **CONFIRMADO** (se fusionan en un código al reprocesar) o **RECHAZADO**. |
@@ -491,7 +495,9 @@ Si Supabase no responde, basta con `DB_BACKEND=sqlite` para seguir trabajando en
 
 ## 11. Asistente de IA
 
-**La IA propone, las personas deciden.**
+**Es opcional y la IA propone, las personas deciden.** El pipeline no la necesita; se activa a pedido.
+
+> ⏳ **Por lotes y puede demorar.** Cada llamada procesa `LLM_BATCH_SIZE` productos (25). Con modelos gratuitos cada lote tarda ~10–40 s, así que 400 productos (~17 lotes) pueden tomar entre 3 y 11 minutos. La app muestra esta estimación antes de ejecutar.
 
 - **Qué hace**: propone la categoría de los productos que las reglas **no** clasificaron y, si se pide, marca / modelo / atributo clave **solo donde están vacíos**.
   El prompt incluye la taxonomía completa y exige responder solo con códigos válidos; no debe inventar marcas ni modelos que no estén en la descripción.
@@ -524,7 +530,7 @@ Cuando llega un archivo nuevo del mismo tipo el próximo mes:
 | Ortografía y marcas | Diccionarios existentes | Agregar errores nuevos a los CSV |
 | País | Sitios conocidos o reconocibles por nombre | Sitios nuevos `SIN_ASIGNAR` → `sites_manual.csv` |
 | Consolidación | Nuevas / actualizadas / sin cambios / ausentes + historial | — |
-| Categoría | ~95% por reglas (+ IA opcional) | Cola "sin clasificar" y validar lo marcado 🤖 |
+| Categoría | ~95% por reglas (IA opcional, a pedido) | Cola "sin clasificar" y validar lo marcado 🤖 |
 | Código global y nombre | Emisión estable | — |
 | Duplicados | Exactos se consolidan solos | Confirmar o rechazar pares aproximados |
 | Publicación | BD + Excel | — |
