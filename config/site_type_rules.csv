@@ -1,0 +1,5 @@
+priority,pattern,siteType
+10,ghost|diferencias|botar|reutilizar|remate|venta|merma|no usar|fuera|rastrear|malo|rebajar|ajustes|proyectos 20|inv 20|transmetb,VIRTUAL_O_BAJA
+20,servicio tecnico|sstt|repair|^sav$,SERVICIO_TECNICO
+30,^cd |bodega|oficina|corporativo|administraci|rla mexico,CENTRO_DISTRIBUCION
+90,.*,VENUE_CLIENTE

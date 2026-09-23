@@ -1,0 +1,5 @@
+pattern,categoryCode
+\b(powercom|powercon|energia|electric|extension|zapatilla|alargador|10a|16a|32a|220|trifasic|monofasic|poder|corriente|chuco)\b,ENE
+\b(utp|ftp|rj ?45|cat ?\d|ethernet|red|fibra|patch cord|lan)\b,RED
+\b(hdmi|sdi|vga|dvi|display ?port|video|bnc|usb ?c|thunderbolt|mini dp)\b,VID
+\b(xlr|plug|rca|speakon|spk|trs|audio|multipar|canon|mini plug|jack|miniplug)\b,AUD

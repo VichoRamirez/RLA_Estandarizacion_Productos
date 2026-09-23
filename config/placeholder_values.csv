@@ -1,0 +1,23 @@
+column,value,action,notes
+manufacturer,S/N,null,Sin dato
+manufacturer,S/M,null,Sin dato
+manufacturer,SM,null,Sin dato
+manufacturer,.,null,Sin dato
+manufacturer,----,null,Sin dato
+manufacturer,VARIOS,null,Sin dato
+manufacturer,SIN MARCA,GENERICO,Genérico
+manufacturer,OEM,GENERICO,Genérico
+manufacturer,GENERICA,GENERICO,Genérico
+manufacturer,GENERICOS,GENERICO,Genérico
+model,S/N,null,Sin dato
+model,S/M,null,Sin dato
+model,SM,null,Sin dato
+model,SIN MODELO,null,Sin dato
+model,GENERICO,null,Sin dato
+model,VARIOS,null,Sin dato
+revenueGroup,XXXXXX,null,Placeholder
+reportGroup,104728,null,Código numérico en campo de texto
+department,DEPT1,null,Placeholder
+*,-,null,Placeholder genérico
+*,N/A,null,Placeholder genérico
+*,NA,null,Placeholder genérico

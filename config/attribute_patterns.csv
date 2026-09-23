@@ -1,0 +1,10 @@
+keyAttribute,pattern,unit,notes
+largo,"(\d+(?:[.,]\d+)?)\s?(?:m|mt|mts|mtrs|metros|mtr)\b",m,Metraje de cables
+pulgadas,"(\d{2,3}(?:[.,]\d)?)\s?(?:\""|''|”|pulgadas|pulg\b|in\b|pul\b)",in,Tamaño de pantalla
+lumenes,"(\d{1,2}[.,]?\d{3})\s?(?:ansi\s?)?(?:lumen|lúmen|lumenes|lúmenes|ansilumenes|ansi|lm\b)",lm,Brillo de proyector
+almacenamiento,"(\d+(?:[.,]\d+)?)\s?(gb|tb|g)\b",GB,Se toma el mayor valor (disco)
+potencia,"(\d+(?:[.,]\d+)?)\s?(w|watts|watt|kw|kva)\b",W,
+canales,(\d+)\s?(?:canales|ch\b|can\b|vias\b),ch,
+pitch,"(?:(\d(?:[.,]\d{1,2})?)\s?(?:mm)?\s?pitch|\bp\s?(\d(?:\.\d{1,2})?)\b)",mm,Pitch pantalla LED
+medida,"(\d+(?:[.,]\d+)?)\s?x\s?(\d+(?:[.,]\d+)?)\s?(m|mts|cm|mt)?\b",,Dimensiones AxB
+puertos,(\d+)\s?(?:puertos|bocas|ports|p\b),puertos,

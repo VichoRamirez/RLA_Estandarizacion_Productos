@@ -1,0 +1,9 @@
+priority,pattern,country,notes
+10,panam|panan,PANAMA,Incluye typo "Panana"
+11,mexico,MEXICO,
+12,miami,USA,
+20,^h\.c\.,COLOMBIA,Prefijo H.C. = hoteles Colombia
+21,colom|\bcol\b|col ?2\d|bogota|medellin|cartagena|agora|cc e?ar 1\d\d|estelar|suite jones|la fontana|windsor house|casa medina|calle 85|dorado capital|efcol,COLOMBIA,
+30,peru|lima|miraflores|san isidro|westin|aqp|arequipa|palacio del in[ck]a|casa andina|dazzler|melia|costa del sol|country club|hotel cap|el pardo,PERU,
+40,chile|santiago|stgo|concepcion|antofagasta|temuco|valdivia|pto\.? ?varas|pta\.? ?arenas|vina del mar|renaca|pto\.? ?montt|coyhaique|chillan|marina del sol|enjoy|metropolitan|titanium|centroparque|parque arauco|pucon|terrado|o.higgins|pullman san martin|ritz carlton|carpas marf,CHILE,
+41,^h\. ,CHILE,Prefijo H. (sin C.) = hoteles Chile

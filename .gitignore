@@ -1,0 +1,7 @@
+__pycache__/
+data/interim/
+_to_delete/
+*.db-journal
+~$*
+.streamlit/secrets.toml
+.env

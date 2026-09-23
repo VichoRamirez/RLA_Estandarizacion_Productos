@@ -1,0 +1,6 @@
+pattern,reason
+\beliminar\b,Descripción indica eliminar
+\bno usar\b,Descripción indica no usar
+\bborrar\b,Descripción indica borrar
+\bprueba\b,Registro de prueba
+^\W*$,Descripción vacía o solo símbolos

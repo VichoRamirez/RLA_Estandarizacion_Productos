@@ -1,0 +1,61 @@
+familyCode,familyName,categoryCode,categoryName,keyAttribute
+AUD,Audio,MIC,Micrófono,
+AUD,Audio,REC,Receptor de micrófono,
+AUD,Audio,ALT,Altavoz / Parlante,potencia
+AUD,Audio,CON,Consola de audio,canales
+AUD,Audio,AMP,Amplificador,potencia
+AUD,Audio,PRO,Procesador / Interfaz de audio,
+AUD,Audio,DIR,Caja directa,
+AUD,Audio,INT,Intercomunicador / Radio,
+AUD,Audio,REP,Reproductor / Grabador de audio,
+AUD,Audio,SIS,Sistema de audio,
+AUD,Audio,ACC,Accesorio de audio,
+VID,Video,PRY,Proyector,lumenes
+VID,Video,PAN,Pantalla / Monitor / TV,pulgadas
+VID,Video,LED,Pantalla LED / Módulo LED,pitch
+VID,Video,TEL,Telón / Ecran,medida
+VID,Video,CAM,Cámara de video,
+VID,Video,SWI,Switcher / Matriz / Escalador,
+VID,Video,DIS,Distribuidor / Extensor / Conversor de video,
+VID,Video,PRC,Procesador / Servidor / Reproductor de video,
+VID,Video,VCF,Videoconferencia,
+VID,Video,ACC,Accesorio de video,
+ILU,Iluminación,FOC,Foco / Luminaria,potencia
+ILU,Iluminación,ROB,Cabeza móvil / Robotizado,
+ILU,Iluminación,CTL,Consola / Control de iluminación,
+ILU,Iluminación,EFE,Efectos (humo / láser),
+ILU,Iluminación,ACC,Accesorio de iluminación,
+INF,Informática,NTB,Computador / Notebook,almacenamiento
+INF,Informática,TAB,Tablet / Dispositivo móvil,almacenamiento
+INF,Informática,PER,Periférico,
+INF,Informática,IMP,Impresora / Insumo de impresión,
+INF,Informática,RED,Networking,puertos
+INF,Informática,ALM,Almacenamiento,almacenamiento
+INF,Informática,SOF,Software / Streaming / Plataforma,
+INF,Informática,ACC,Accesorio informático,
+TRA,Traducción simultánea,CAB,Cabina de interpretación,
+TRA,Traducción simultánea,PUP,Pupitre de intérprete,
+TRA,Traducción simultánea,RCP,Receptor / Audífono de traducción,
+TRA,Traducción simultánea,TRM,Transmisor / Radiador,
+TRA,Traducción simultánea,DEB,Sistema de debate / votación,
+TRA,Traducción simultánea,ACC,Accesorio de traducción,
+CAB,Cables y conectores,AUD,Cable de audio,largo
+CAB,Cables y conectores,VID,Cable de video,largo
+CAB,Cables y conectores,RED,Cable de red,largo
+CAB,Cables y conectores,ENE,Cable / Extensión de energía,largo
+CAB,Cables y conectores,ADP,Adaptador / Conector,
+ELE,Electricidad,TAB,Tablero eléctrico,
+ELE,Electricidad,GEN,Generador,potencia
+ELE,Electricidad,UPS,UPS / Respaldo de energía,
+ELE,Electricidad,ACC,Accesorio eléctrico,
+EST,Estructura y montaje,TRU,Truss / Estructura,medida
+EST,Estructura y montaje,RIG,Rigging / Tecle / Motor,
+EST,Estructura y montaje,SOP,Soporte / Pedestal / Base,
+EST,Estructura y montaje,MOB,Mobiliario / Podio / Atril,
+EST,Estructura y montaje,CAS,Case / Rack / Bolso,
+PAQ,Paquetes y salones,SAL,Paquete AV de salón,
+PAQ,Paquetes y salones,KIT,Kit / Sistema armado,
+SRV,Servicios,TEC,Personal técnico / Operación,
+SRV,Servicios,LOG,Transporte / Viáticos / Logística,
+SRV,Servicios,SUB,Subarriendo,
+SRV,Servicios,OTR,Otro servicio / cargo,

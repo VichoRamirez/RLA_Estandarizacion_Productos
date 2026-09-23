@@ -1,0 +1,14 @@
+value,bool
+RENTABLE,true
+NOTRENTABLE,false
+SELLABLE,true
+NOTSELLABLE,false
+SUBRENT,true
+NOTSUBRENT,false
+FREIGHT,true
+NOTFREIGHT,false
+MISCITEM,true
+TRUE,true
+FALSE,false
+VERDADERO,true
+FALSO,false

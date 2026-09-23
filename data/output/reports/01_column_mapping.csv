@@ -1,0 +1,43 @@
+﻿sourceColumn,targetColumn,status,kept
+Product ID,legacyProductId,mapeada,True
+Description,description,mapeada,True
+Stock,stockQty,mapeada,True
+Type,productType,mapeada,True
+ITEMCATEGORY,itemCategory,mapeada,True
+Package,packageType,mapeada,True
+Cost,unitCost,mapeada,True
+Replacement Cost,replacementCost,mapeada,True
+SITENAME,siteName,mapeada,True
+MANUFACTURER,manufacturer,mapeada,True
+MODEL,model,mapeada,True
+SITEID,siteId,mapeada,True
+Availability Group,availabilityGroup,mapeada,True
+ACCUMULATEDDEPRECIATIONGLCODE,accumulatedDepreciationGlCode,descartada,False
+Report Group,reportGroup,mapeada,True
+WRITEOFFGLCODE,writeOffGlCode,descartada,False
+Bin Loaction,binLocation,mapeada,True
+CANRENT,canRent,mapeada,True
+CANSELL,canSell,mapeada,True
+CANSUBRENT,canSubrent,mapeada,True
+COGSGROUP,cogsGroup,descartada,False
+TAXGROUP,taxGroup,mapeada,True
+CostoTotal,totalCost,mapeada,True
+DEPARTMENT,department,mapeada,True
+DEPRCIATIONGLCODE,depreciationGlCode,descartada,False
+DISCOUNTGROUP,discountGroup,descartada,False
+AFFECTSAVAILABILITY,affectsAvailability,mapeada,True
+REVENUEGROUP,revenueGroup,mapeada,True
+RETAILPRICE,retailPrice,mapeada,True
+EXCHANGEGROUP,exchangeGroup,mapeada,True
+INVENTORYGROUP,inventoryGroup,mapeada,True
+ISFREIGHT,isFreight,mapeada,True
+ISMISCITEM,isMiscItem,mapeada,True
+LOWRETAILPRICE,lowRetailPrice,mapeada,True
+Shelf Location,shelfLocation,descartada,False
+MAXIMUMQTY,maximumQty,mapeada,True
+MINIMUMQTY,minimumQty,mapeada,True
+SUBRENTGLCODE,subrentGlCode,mapeada,True
+MSRP,msrp,mapeada,True
+SELLGLCODE,sellGlCode,mapeada,True
+Price Group,priceGroup,descartada,False
+REORDERQTY,reorderQty,mapeada,True

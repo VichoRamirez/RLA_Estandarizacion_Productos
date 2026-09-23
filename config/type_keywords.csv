@@ -1,0 +1,52 @@
+familyCode,categoryCode,pattern,typeLabel
+VID,PAN,\b(tv|televisor|smart tv)\b,Televisor
+VID,PAN,\btotem\b,Tótem
+VID,PAN,\bpodio interactivo\b,Podio interactivo
+VID,PAN,\bmonitor\b,Monitor
+VID,TEL,\belectric,Telón eléctrico
+VID,TEL,\b(mecano|manual|tripode)\b,Telón manual
+VID,TEL,\becran\b,Ecran
+VID,PRY,\blaser\b,Proyector láser
+AUD,ALT,\b(subwoofer|sub ?bajo|sub woofer)\b,Subwoofer
+AUD,ALT,\bline ?array\b,Line array
+AUD,ALT,\bmonitor de piso\b,Monitor de piso
+AUD,MIC,\b(solapa|lavalier|lavelier)\b,Micrófono lavalier
+AUD,MIC,\b(headset|vincha|cintillo)\b,Micrófono headset
+AUD,MIC,\b(podio|podium|cuello de ganso|gooseneck)\b,Micrófono de podio
+AUD,MIC,\binalambric,Micrófono inalámbrico
+AUD,MIC,\balambric,Micrófono alámbrico
+INF,NTB,\b(imac|all in one)\b,Computador all in one
+INF,NTB,\b(notebook|laptop|portatil|macbook)\b,Notebook
+INF,NTB,\b(cpu|mac mini|mac studio|workstation|escritorio|desktop)\b,Computador de escritorio
+INF,PER,\bmouse\b,Mouse
+INF,PER,\bteclado\b,Teclado
+INF,PER,\b(passlide|pasa slide|presentador|puntero)\b,Presentador inalámbrico
+INF,RED,\brouter\b,Router
+INF,RED,\bswitch\b,Switch de red
+INF,RED,\baccess point\b,Access point
+INF,IMP,\bimpresora\b,Impresora
+CAB,VID,\bhdmi\b,Cable HDMI
+CAB,VID,\bsdi\b,Cable SDI
+CAB,VID,\bvga\b,Cable VGA
+CAB,VID,\bdisplay ?port\b,Cable DisplayPort
+CAB,AUD,\bmultipar\b,Multipar de audio
+CAB,AUD,\b(speakon|spk)\b,Cable Speakon
+CAB,AUD,\bxlr\b,Cable XLR
+CAB,AUD,\brca\b,Cable RCA
+CAB,AUD,\bplug\b,Cable plug
+CAB,RED,\bfibra\b,Fibra óptica
+CAB,RED,\butp\b,Cable UTP
+CAB,RED,\bftp\b,Cable FTP
+CAB,ENE,\bzapatilla\b,Zapatilla eléctrica
+CAB,ENE,\bextension\b,Extensión eléctrica
+CAB,ENE,\bpowerco[mn]\b,Cable Powercon
+ILU,FOC,\bfresnel\b,Foco Fresnel
+ILU,FOC,\b(elipso|elipsoidal|leko)\w*,Foco elipsoidal
+ILU,FOC,\b(par ?led|parled|par ?\d\d|par)\b,Foco PAR
+ILU,FOC,\bstrob,Estroboscópico
+ILU,FOC,\bbarra\b,Barra LED
+TRA,RCP,\baudifono,Audífono de traducción
+TRA,RCP,\breceptor,Receptor de traducción
+EST,MOB,\bpodio\b,Podio
+EST,MOB,\batril\b,Atril
+EST,SOP,\btripode\b,Trípode

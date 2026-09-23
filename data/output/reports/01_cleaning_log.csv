@@ -1,0 +1,156 @@
+﻿column,before,after,rule,rows
+stockQty,texto formato latino,número,tipado,57007
+unitCost,texto formato latino,número,tipado,57011
+replacementCost,texto formato latino,número,tipado,56816
+canRent,etiqueta texto,booleano,tipado,57011
+canSell,etiqueta texto,booleano,tipado,57011
+canSubrent,etiqueta texto,booleano,tipado,57011
+totalCost,texto formato latino,número,tipado,57007
+affectsAvailability,etiqueta texto,booleano,tipado,57011
+retailPrice,texto formato latino,número,tipado,46538
+isFreight,etiqueta texto,booleano,tipado,57011
+isMiscItem,etiqueta texto,booleano,tipado,57011
+lowRetailPrice,texto formato latino,número,tipado,56830
+maximumQty,texto formato latino,número,tipado,15954
+minimumQty,texto formato latino,número,tipado,15954
+msrp,texto formato latino,número,tipado,2811
+reorderQty,texto formato latino,número,tipado,15954
+manufacturer,S/N,(vacío),placeholder,80
+manufacturer,S/M,(vacío),placeholder,29
+manufacturer,SM,(vacío),placeholder,20
+manufacturer,.,(vacío),placeholder,1
+manufacturer,----,(vacío),placeholder,1
+manufacturer,VARIOS,(vacío),placeholder,1
+manufacturer,SIN MARCA,GENERICO,placeholder,3
+manufacturer,OEM,GENERICO,placeholder,430
+manufacturer,GENERICA,GENERICO,placeholder,6
+manufacturer,GENERICOS,GENERICO,placeholder,5
+model,S/N,(vacío),placeholder,70
+model,S/M,(vacío),placeholder,58
+model,SM,(vacío),placeholder,15
+model,SIN MODELO,(vacío),placeholder,6
+model,GENERICO,(vacío),placeholder,42
+model,VARIOS,(vacío),placeholder,1
+revenueGroup,XXXXXX,(vacío),placeholder,116
+reportGroup,104728,(vacío),placeholder,28
+department,DEPT1,(vacío),placeholder,1
+description,sisteman,sistema,ortografía (word_corrections.csv),3
+description,ssistema,sistema,ortografía (word_corrections.csv),1
+description,audioi,audio,ortografía (word_corrections.csv),2
+description,proyecccion,proyección,ortografía (word_corrections.csv),8
+description,proyecciom,proyección,ortografía (word_corrections.csv),1
+description,proyecor,proyector,ortografía (word_corrections.csv),2
+description,patalla,pantalla,ortografía (word_corrections.csv),19
+description,montor,monitor,ortografía (word_corrections.csv),9
+description,monitore,monitor,ortografía (word_corrections.csv),2
+description,inhalambrico,inalámbrico,ortografía (word_corrections.csv),6
+description,ilumiacion,iluminación,ortografía (word_corrections.csv),8
+description,llumenes,lúmenes,ortografía (word_corrections.csv),5
+description,dixital,digital,ortografía (word_corrections.csv),1
+description,contol,control,ortografía (word_corrections.csv),52
+description,notebbok,notebook,ortografía (word_corrections.csv),3
+description,parlate,parlante,ortografía (word_corrections.csv),6
+description,adapatador,adaptador,ortografía (word_corrections.csv),2
+description,extesion,extensión,ortografía (word_corrections.csv),14
+description,extencion,extensión,ortografía (word_corrections.csv),36
+description,covertidor,convertidor,ortografía (word_corrections.csv),1
+description,simultaneal,simultánea,ortografía (word_corrections.csv),5
+description,canles,canales,ortografía (word_corrections.csv),2
+description,balroom,ballroom,ortografía (word_corrections.csv),3
+description,portati,portátil,ortografía (word_corrections.csv),4
+description,dobre,doble,ortografía (word_corrections.csv),3
+description,trasmisor,transmisor,ortografía (word_corrections.csv),15
+description,swircher,switcher,ortografía (word_corrections.csv),2
+description,fresnell,fresnel,ortografía (word_corrections.csv),71
+description,fressnel,fresnel,ortografía (word_corrections.csv),7
+description,fesnel,fresnel,ortografía (word_corrections.csv),1
+description,fpyer,foyer,ortografía (word_corrections.csv),3
+description,leanding,landing,ortografía (word_corrections.csv),2
+description,hdbaaset,hdbaset,ortografía (word_corrections.csv),2
+description,lavelier,lavalier,ortografía (word_corrections.csv),2
+description,papelogrago,papelógrafo,ortografía (word_corrections.csv),36
+description,multifincional,multifuncional,ortografía (word_corrections.csv),4
+description,direcorio,directorio,ortografía (word_corrections.csv),3
+description,teclago,teclado,ortografía (word_corrections.csv),1
+description,valdivvia,valdivia,ortografía (word_corrections.csv),3
+description,iteractivo,interactivo,ortografía (word_corrections.csv),1
+description,infrarojo,infrarrojo,ortografía (word_corrections.csv),31
+description,delagado,delegado,ortografía (word_corrections.csv),5
+description,medelo,modelo,ortografía (word_corrections.csv),10
+description,passslide,passlide,ortografía (word_corrections.csv),7
+description,riggin,rigging,ortografía (word_corrections.csv),4
+description,equalizador,ecualizador,ortografía (word_corrections.csv),12
+description,milumin,millumin,ortografía (word_corrections.csv),9
+manufacturer,KRAMMER,KRAMER,alias fabricante (manufacturer_aliases.csv),356
+manufacturer,BLACKMAGIC,BLACKMAGIC DESIGN,alias fabricante (manufacturer_aliases.csv),276
+manufacturer,ELECTROVOICE,ELECTRO-VOICE,alias fabricante (manufacturer_aliases.csv),149
+manufacturer,DALITE,DA-LITE,alias fabricante (manufacturer_aliases.csv),147
+manufacturer,DA LITE,DA-LITE,alias fabricante (manufacturer_aliases.csv),102
+manufacturer,ELECTRO VOICE,ELECTRO-VOICE,alias fabricante (manufacturer_aliases.csv),84
+manufacturer,DLINK,D-LINK,alias fabricante (manufacturer_aliases.csv),78
+manufacturer,DRAPPER,DRAPER,alias fabricante (manufacturer_aliases.csv),71
+manufacturer,ANALOGWAY,ANALOG WAY,alias fabricante (manufacturer_aliases.csv),61
+manufacturer,D SAN,DSAN,alias fabricante (manufacturer_aliases.csv),52
+manufacturer,BLACK MAGIC,BLACKMAGIC DESIGN,alias fabricante (manufacturer_aliases.csv),38
+manufacturer,LITE PUTER,LITE-PUTER,alias fabricante (manufacturer_aliases.csv),37
+manufacturer,POLARLIGTH,POLARLIGHT,alias fabricante (manufacturer_aliases.csv),36
+manufacturer,BHERINGER,BEHRINGER,alias fabricante (manufacturer_aliases.csv),32
+manufacturer,PHILLIPS,PHILIPS,alias fabricante (manufacturer_aliases.csv),27
+manufacturer,SOLID VIEW,SOLIDVIEW,alias fabricante (manufacturer_aliases.csv),27
+manufacturer,YAMAH,YAMAHA,alias fabricante (manufacturer_aliases.csv),23
+manufacturer,TP_LINK,TP-LINK,alias fabricante (manufacturer_aliases.csv),22
+manufacturer,MULTICAISSES,MULTICAISSE,alias fabricante (manufacturer_aliases.csv),21
+manufacturer,BLACKMAGICDESIGN,BLACKMAGIC DESIGN,alias fabricante (manufacturer_aliases.csv),18
+manufacturer,SCAN DISK,SANDISK,alias fabricante (manufacturer_aliases.csv),18
+manufacturer,BEHERINGER,BEHRINGER,alias fabricante (manufacturer_aliases.csv),18
+manufacturer,BLUSTTREAM,BLUSTREAM,alias fabricante (manufacturer_aliases.csv),18
+manufacturer,AV MATRIX,AVMATRIX,alias fabricante (manufacturer_aliases.csv),16
+manufacturer,ASSUS,ASUS,alias fabricante (manufacturer_aliases.csv),15
+manufacturer,AMERICA NET,AMERICAN NET,alias fabricante (manufacturer_aliases.csv),14
+manufacturer,DA - LITE,DA-LITE,alias fabricante (manufacturer_aliases.csv),14
+manufacturer,BERINGER,BEHRINGER,alias fabricante (manufacturer_aliases.csv),13
+manufacturer,BRIGHTSING,BRIGHTSIGN,alias fabricante (manufacturer_aliases.csv),11
+manufacturer,TP LINK,TP-LINK,alias fabricante (manufacturer_aliases.csv),11
+manufacturer,KLIPXTREME,KLIP XTREME,alias fabricante (manufacturer_aliases.csv),10
+manufacturer,ALLEN & HEAT,ALLEN & HEATH,alias fabricante (manufacturer_aliases.csv),9
+manufacturer,SMALLRING,SMALLRIG,alias fabricante (manufacturer_aliases.csv),8
+manufacturer,SOUNDCRAF,SOUNDCRAFT,alias fabricante (manufacturer_aliases.csv),7
+manufacturer,X-TECH,XTECH,alias fabricante (manufacturer_aliases.csv),7
+manufacturer,TV ONE,TV-ONE,alias fabricante (manufacturer_aliases.csv),6
+manufacturer,ALLEN / HEAT,ALLEN & HEATH,alias fabricante (manufacturer_aliases.csv),6
+manufacturer,CAHUVET,CHAUVET,alias fabricante (manufacturer_aliases.csv),5
+manufacturer,MY CONFERENCE TOOLS,MYCONFERENCETOOLS,alias fabricante (manufacturer_aliases.csv),5
+manufacturer,DSANº,DSAN,alias fabricante (manufacturer_aliases.csv),4
+manufacturer,BLACK MAGIC DESIGN,BLACKMAGIC DESIGN,alias fabricante (manufacturer_aliases.csv),4
+manufacturer,INTER M,INTER-M,alias fabricante (manufacturer_aliases.csv),4
+manufacturer,U-GREEN,UGREEN,alias fabricante (manufacturer_aliases.csv),4
+manufacturer,TVONE,TV-ONE,alias fabricante (manufacturer_aliases.csv),4
+manufacturer,PC TRONIX,PCTRONIX,alias fabricante (manufacturer_aliases.csv),4
+manufacturer,TUBOSOUND,TURBOSOUND,alias fabricante (manufacturer_aliases.csv),3
+manufacturer,POLAR LIGTH,POLARLIGHT,alias fabricante (manufacturer_aliases.csv),3
+manufacturer,TPLINK,TP-LINK,alias fabricante (manufacturer_aliases.csv),3
+manufacturer,ELCTROVOICE,ELECTRO-VOICE,alias fabricante (manufacturer_aliases.csv),2
+manufacturer,DA- LITE,DA-LITE,alias fabricante (manufacturer_aliases.csv),2
+manufacturer,BOSH,BOSCH,alias fabricante (manufacturer_aliases.csv),2
+manufacturer,NUMARCK,NUMARK,alias fabricante (manufacturer_aliases.csv),2
+manufacturer,KINKSTON,KINGSTON,alias fabricante (manufacturer_aliases.csv),2
+manufacturer,LA GAME,LA GAMME,alias fabricante (manufacturer_aliases.csv),2
+manufacturer,GE FORCE,GEFORCE,alias fabricante (manufacturer_aliases.csv),2
+manufacturer,EL GATO,ELGATO,alias fabricante (manufacturer_aliases.csv),1
+manufacturer,LITE - PUTER,LITE-PUTER,alias fabricante (manufacturer_aliases.csv),1
+manufacturer,KLIP EXTREME,KLIP XTREME,alias fabricante (manufacturer_aliases.csv),1
+manufacturer,MITSUBHISHI,MITSUBISHI,alias fabricante (manufacturer_aliases.csv),1
+availabilityGroup,mayúsc./tildes variables,MAYÚSCULAS sin tilde,formato,197
+reportGroup,mayúsc./tildes variables,MAYÚSCULAS sin tilde,formato,1932
+reportGroup,LINE ARRY,LINE ARRAY,ortografía (value_corrections.csv),8
+reportGroup,MAPING,MAPPING,ortografía (value_corrections.csv),4
+department,mayúsc./tildes variables,MAYÚSCULAS sin tilde,formato,76
+revenueGroup,mayúsc./tildes variables,MAYÚSCULAS sin tilde,formato,4189
+revenueGroup,SUBARRIENDO GENERADFOR,SUBARRIENDO GENERADOR,ortografía (value_corrections.csv),20
+exchangeGroup,mayúsc./tildes variables,MAYÚSCULAS sin tilde,formato,1166
+exchangeGroup,AMPLIFICADOREWS,AMPLIFICADORES,ortografía (value_corrections.csv),334
+exchangeGroup,SWITH DE VIDEO,SWITCH DE VIDEO,ortografía (value_corrections.csv),178
+exchangeGroup,MEMRORIAS,MEMORIAS,ortografía (value_corrections.csv),171
+exchangeGroup,COTROL TACTIL ALAMBRICO,CONTROL TACTIL ALAMBRICO,ortografía (value_corrections.csv),4
+exchangeGroup,CABLE S,CABLES,ortografía (value_corrections.csv),5
+exchangeGroup,AUDIO MICROPHONE S,AUDIO MICROPHONES,ortografía (value_corrections.csv),4

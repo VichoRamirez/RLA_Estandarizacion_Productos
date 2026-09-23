@@ -1,0 +1,5 @@
+pandas>=2.0
+openpyxl>=3.1
+pyarrow>=14
+rapidfuzz>=3.0
+streamlit>=1.45

@@ -1,0 +1,43 @@
+sourceColumn,targetColumn,dataType,keep,notes
+Product ID,legacyProductId,text,y,Código original del producto en R2 (por país)
+Description,description,text,y,Descripción libre del producto
+Stock,stockQty,number,y,Stock en el sitio
+Type,productType,text,y,ITEM / MISCCHARGE / LABOR / PARTS
+ITEMCATEGORY,itemCategory,text,y,SERIAL / NONSERIAL
+Package,packageType,text,y,ITEM / PACKAGE
+Cost,unitCost,number,y,Costo unitario en el sitio
+Replacement Cost,replacementCost,number,y,
+SITENAME,siteName,text,y,
+MANUFACTURER,manufacturer,text,y,
+MODEL,model,text,y,
+SITEID,siteId,text,y,
+Availability Group,availabilityGroup,text,y,
+ACCUMULATEDDEPRECIATIONGLCODE,accumulatedDepreciationGlCode,text,n,100% vacía
+Report Group,reportGroup,text,y,
+WRITEOFFGLCODE,writeOffGlCode,text,n,100% vacía
+Bin Loaction,binLocation,text,y,
+CANRENT,canRent,bool,y,RENTABLE / NOTRENTABLE
+CANSELL,canSell,bool,y,SELLABLE / NOTSELLABLE
+CANSUBRENT,canSubrent,bool,y,SUBRENT / NOTSUBRENT
+COGSGROUP,cogsGroup,text,n,100% vacía
+TAXGROUP,taxGroup,text,y,
+CostoTotal,totalCost,number,y,
+DEPARTMENT,department,text,y,
+DEPRCIATIONGLCODE,depreciationGlCode,text,n,100% vacía
+DISCOUNTGROUP,discountGroup,text,n,2 valores no nulos de 57.011
+AFFECTSAVAILABILITY,affectsAvailability,bool,y,
+REVENUEGROUP,revenueGroup,text,y,
+RETAILPRICE,retailPrice,number,y,
+EXCHANGEGROUP,exchangeGroup,text,y,
+INVENTORYGROUP,inventoryGroup,text,y,
+ISFREIGHT,isFreight,bool,y,FREIGHT / NOTFREIGHT
+ISMISCITEM,isMiscItem,bool,y,MISCITEM / vacío
+LOWRETAILPRICE,lowRetailPrice,number,y,
+Shelf Location,shelfLocation,text,n,100% vacía
+MAXIMUMQTY,maximumQty,number,y,
+MINIMUMQTY,minimumQty,number,y,
+SUBRENTGLCODE,subrentGlCode,text,y,
+MSRP,msrp,number,y,
+SELLGLCODE,sellGlCode,text,y,
+Price Group,priceGroup,text,n,100% vacía
+REORDERQTY,reorderQty,number,y,

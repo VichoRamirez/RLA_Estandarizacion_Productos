@@ -1,0 +1,89 @@
+priority,field,pattern,familyCode,categoryCode
+1,description,\bsubarr,SRV,SUB
+2,description,\b(tecnico|operador|operacion|ingeniero|personal|staff|jornada|dj\b|interprete[s]? (por|jornada|idioma)|coordinador|productor|asistente|montajista|hora extra|horas extras)\b,SRV,TEC
+3,description,\b(transporte|flete|viatico|viaticos|alojamiento|hotel para|traslado|pasaje|alimentacion|estacionamiento|despacho|envio|courier|movilizacion)\b,SRV,LOG
+4,productType,^(LABOR)$,SRV,TEC
+5,productType,^(MISCCHARGE)$,SRV,OTR
+10,description,^\W*(cable|cables|chicote|extension|zapatilla|multipar|powercom|powercon|patch cord|alargador)\b,CAB,_AUTO
+11,description,\b(adaptador|conector|transicion|chuco|jack|plug|terminal|splitter y|coupler|gender|union)\b,CAB,ADP
+20,description,\b(cabina)\b,TRA,CAB
+21,description,\b(pupitre|consola de interpret|unidad de interpret)\b,TRA,PUP
+22,description,\b(receptor(es)? (de )?(traduccion|infrarroj|ir\b)|audifono|audifonos|receptor digital infra|receptor ir)\b,TRA,RCP
+23,description,\b(radiador|transmisor (infrarroj|ir|de traduccion|digital)|emisor infrarroj)\b,TRA,TRM
+24,description,\b(debate|votacion|delegado|presidente|mic(rofono)? de conferencia|unidad de control .*debate|conference)\b,TRA,DEB
+25,description,\b(traduccion|interpretacion simultanea|idioma)\b,TRA,ACC
+30,description,\b(sala|salon|ballroom|foyer|terraza|auditorio|paquete|av basico|av completo|av diamond|av sala|sonido .*sala)\b,PAQ,SAL
+31,description,\b(sistema de (audio|sonido|sonorizacion|proyeccion|video)|kit\b|combo|pack\b|set de)\b,PAQ,KIT
+40,description,\b(receptor)\b.*\b(mic|microfono|inalambric|qlxd|ulxd|slx|blx|sennheiser|shure)|\b(qlxd4|ulxd4|slx4|blx4|ew ?100|ew ?300) ?(r|receptor)?\b,AUD,REC
+41,description,\b(microfono|mic\b|lavalier|solapa|headset|vincha|capsula|condensador|shotgun|pg ?58|sm ?58|beta ?58)\b,AUD,MIC
+42,description,\b(caja directa|direct box|di box)\b,AUD,DIR
+43,description,\b(consola|mixer|mezclador|power mixer|mesa de sonido)\b,AUD,CON
+44,description,\b(amplificador|amplificacion|potencia (de audio)?)\b,AUD,AMP
+45,description,\b(parlante|altavoz|altavoces|bafle|monitor de piso|line ?array|sub ?bajo|subwoofer|bajo activo|columna|caja acustica|array|l1\b|bose|cabezal)\b,AUD,ALT
+46,description,\b(procesador de audio|ecualizador|interfaz de audio|interface de audio|crossover|compresor|dsp|tarjeta de sonido|driverack)\b,AUD,PRO
+47,description,\b(intercomunicador|intercom|clear ?com|radio|walkie|beltpack)\b,AUD,INT
+48,description,\b(reproductor (de )?(cd|audio|mp3)|grabador|grabacion|registro de audio|cd player|tornamesa|controlador dj)\b,AUD,REP
+99,description,\b(sonido|audio)\b,AUD,SIS
+50,description,\b(proyector|proyeccion|lumen|lumenes|ansilumenes|ansi)\b,VID,PRY
+51,description,\b(pantalla led|modulo led|modulo de led|poster led|muro led|led wall|pitch|videowall|video wall)\b,VID,LED
+49.5,description,\b(telon|ecran|screen|pantalla (de )?proyeccion|stagescreen|targa|fastfold|cosmopolitan)\b,VID,TEL
+53,description,\b(monitor|pantalla|televisor|tv\b|smart tv|lcd|plasma|display|totem|podio interactivo)\b,VID,PAN
+54,description,\b(camara|filmadora|gopro|osmo|ptz|webcam|lente)\b,VID,CAM
+55,description,\b(switcher|switch de video|matriz|matrix|escalador|scaler|seamless|atem|mezclador de video|roland v)\b,VID,SWI
+56,description,\b(distribuidor|extensor|extender|convertidor|conversor|hdbaset|capturador|capturadora|splitter|balun|transmisor hdmi|receptor hdmi)\b,VID,DIS
+57,description,\b(procesador de video|servidor de video|media server|watchout|reproductor (de )?(video|dvd|blu)|dvd|blu ?ray|novastar|resolume|millumin|decodificador)\b,VID,PRC
+58,description,\b(videoconferencia|video conferencia|codec|polycom|zoom room|telefono conferencia|telefonoconferencia)\b,VID,VCF
+60,description,\b(cabeza movil|robotizado|beam|spot movil|wash movil|moving)\b,ILU,ROB
+61,description,\b(consola de iluminacion|dmx|dimmer|titan|grand ma|controlador de iluminacion)\b,ILU,CTL
+62,description,\b(humo|maquina de humo|hazer|laser|burbuja|confeti|chispa|niebla)\b,ILU,EFE
+63,description,\b(foco|par ?(led|64|56)?|parled|fresnel|elipsoidal|leko|seguidor|cyclorama|barra led|luz|luces|iluminacion|lampara|reflector|strobo|uplight)\b,ILU,FOC
+70,description,\b(notebook|laptop|computador|macbook|imac|mac mini|cpu|pc\b|all in one|workstation)\b,INF,NTB
+71,description,\b(ipad|tablet|tableta|celular|smartphone|iphone)\b,INF,TAB
+72,description,\b(impresora|toner|tinta|cartucho|plotter|escaner|scanner|multifuncional)\b,INF,IMP
+73,description,\b(switch|router|access point|ap\b|firewall|wifi|red inalambrica|modem|internet|enlace|antena wifi|punto de red)\b,INF,RED
+74,description,\b(disco|pendrive|memoria|ssd|hdd|sd card|micro ?sd|usb \d|almacenamiento|nas)\b,INF,ALM
+75,description,\b(mouse|teclado|passlide|presentador|puntero|lector|scanner de codigo|parlante pc|webcam)\b,INF,PER
+76,description,\b(streaming|plataforma|licencia|software|app\b|aplicacion|hosting|web|landing|vimeo|zoom|livestorm|dominio|diseno|virtual|hibrido)\b,INF,SOF
+80,description,\b(tablero|tablero electrico)\b,ELE,TAB
+81,description,\b(generador|grupo electrogeno)\b,ELE,GEN
+82,description,\b(ups|regulador de voltaje|estabilizador)\b,ELE,UPS
+83,description,\b(transformador|breaker|enchufe|toma|alargador|electric)\b,ELE,ACC
+90,description,\b(truss|estructura|torre|tarima|escenario|plataforma escenica|pasarela)\b,EST,TRU
+91,description,\b(tecle|motor|rigging|eslinga|linga|grillete|clamp|abrazadera|cadena|polipasto)\b,EST,RIG
+92,description,\b(soporte|pedestal|tripode|base (de )?piso|atril de mic|brazo|stand|braket|bracket)\b,EST,SOP
+93,description,\b(podio|atril|mesa|silla|sillon|pupitre de orador|papelografo|pizarra|mobiliario|mueble|biombo|alfombra|cortina)\b,EST,MOB
+94,description,\b(case|rack|bolso|maleta|estuche|flight|baul|caja de transporte)\b,EST,CAS
+100,groups,\b(microfono|mic podium|mic debate|receptor mic|audio microphone)\b,AUD,MIC
+101,groups,\b(altavoces|sistema array|line array|sub bajo)\b,AUD,ALT
+102,groups,\b(consola|consolas audio|power mixer)\b,AUD,CON
+103,groups,\b(amplificador|amplificacion)\b,AUD,AMP
+104,groups,\b(proyector|projector)\b,VID,PRY
+105,groups,\b(pantalla led|modulo led)\b,VID,LED
+106,groups,\b(telon)\b,VID,TEL
+107,groups,\b(monitor|televisor|monitores y tv)\b,VID,PAN
+108,groups,\b(camara)\b,VID,CAM
+109,groups,\b(switcher|matriz|escalador|swith|switch de video)\b,VID,SWI
+110,groups,\b(distribuidor|extensor|adaptadores de video)\b,VID,DIS
+111,groups,\b(cables de audio)\b,CAB,AUD
+112,groups,\b(cables video)\b,CAB,VID
+113,groups,\b(cables de red)\b,CAB,RED
+114,groups,\b(cables de energia)\b,CAB,ENE
+115,groups,\b(cable)\b,CAB,ADP
+116,groups,\b(notebook|laptop|computadores|cpu)\b,INF,NTB
+117,groups,\b(impresora|tinta)\b,INF,IMP
+118,groups,\b(switch de red|routers|redes|networking)\b,INF,RED
+119,groups,\b(traduccion|interpretacion)\b,TRA,ACC
+120,groups,\b(iluminacion|focos led)\b,ILU,FOC
+121,groups,\b(tablero electrico)\b,ELE,TAB
+122,groups,\b(soporte)\b,EST,SOP
+123,groups,\b(cases|cabinas)\b,EST,CAS
+130,department,^audio$,AUD,ACC
+131,department,^video$,VID,ACC
+132,department,^iluminacion$,ILU,ACC
+133,department,^(informatica|computacion|perifericos|networking)$,INF,ACC
+134,department,^traduccion simultanea$,TRA,ACC
+135,department,^electricidad$,ELE,ACC
+136,department,^(cable|cables)$,CAB,ADP
+137,department,^(montaje|estructura|mobiliario|cases)$,EST,SOP
+138,department,^(servicios|servicio tecnico|transporte)$,SRV,OTR
+125,packageType,^PACKAGE$,PAQ,KIT
