@@ -34,6 +34,45 @@ def refresh():
     st.cache_data.clear()
 
 
+@st.cache_data(ttl=600, show_spinner="Cargando detalle por sitio...")
+def load_stock() -> pd.DataFrame:
+    """Base acumulada producto x sitio (solo filas vigentes) con su código global."""
+    s = store.read_table("stock_rows")
+    if s.empty:
+        return s
+    s = s[s.isPresent.fillna(True).astype(bool)]
+    lm = load("product_legacy_map")[["legacyProductId", "globalCode"]]
+    return s.merge(lm, on="legacyProductId", how="left")
+
+
+def stock_for(codes: list) -> pd.DataFrame:
+    lm = load("product_legacy_map")
+    ids = lm[lm.globalCode.isin(codes)].legacyProductId.tolist()
+    s = store.read_table("stock_rows", {"legacyProductId": ids})
+    if s.empty:
+        return s
+    s = s[s.isPresent.fillna(True).astype(bool)]
+    return s.merge(lm[["legacyProductId", "globalCode"]], on="legacyProductId", how="left")
+
+
+def excel_bytes(sheets: dict) -> bytes:
+    import io
+    buf = io.BytesIO()
+    with pd.ExcelWriter(buf, engine="openpyxl") as w:
+        for name, df in sheets.items():
+            df.to_excel(w, sheet_name=name[:31], index=False)
+            ws = w.sheets[name[:31]]
+            ws.auto_filter.ref = ws.dimensions
+            ws.freeze_panes = "A2"
+    return buf.getvalue()
+
+
+def ai_fields(row) -> str:
+    m = {"classificationSource": "classification", "manufacturerSource": "manufacturer",
+         "modelSource": "model", "keyAttributeSource": "keyAttribute"}
+    return ", ".join(v for k, v in m.items() if row.get(k) == "ia")
+
+
 def db_ready() -> bool:
     return not load("products").empty
 
@@ -81,9 +120,23 @@ CODE2LABEL = dict(zip(tax.code, tax.label))
 
 st.sidebar.title("📦 Maestro de productos")
 st.sidebar.caption("RLA · estandarización multi-país")
-page = st.sidebar.radio("Sección", ["Resumen", "Buscar producto", "Revisar y editar", "Duplicados",
+page = st.sidebar.radio("Sección", ["Resumen", "Buscar producto", "Revisar y editar", "Duplicados", "Historial de cargas",
                                     "Crear producto", "Cargar datos / IA"])
 user = st.sidebar.text_input("Usuario (para trazabilidad)", value="analista")
+
+@st.cache_data(ttl=300, show_spinner="Conectando a la base de datos...")
+def db_ping() -> str:
+    return store.ping()
+
+
+try:
+    _db_label = db_ping()
+    st.sidebar.success(f"🗄️ BD: {_db_label}", icon=None)
+except Exception as e:  # noqa: BLE001
+    st.sidebar.error(f"🗄️ BD ({store.backend()}) no disponible: {e}")
+    st.error("No se pudo conectar a la base de datos. Revisa `.env` (DB_BACKEND, SUPABASE_URL, SUPABASE_KEY) "
+             "o cambia `DB_BACKEND=sqlite` para trabajar en local.")
+    st.stop()
 
 if not db_ready() and page != "Cargar datos / IA":
     st.warning("La base está vacía. Ve a **Cargar datos / IA** y procesa un archivo.")
@@ -124,7 +177,7 @@ if page == "Resumen":
 
 # =====================================================================  BUSCAR
 elif page == "Buscar producto":
-    p, pc, pss, lm = load("products"), load("product_country"), load("product_site_stock"), load("product_legacy_map")
+    p, pc, lm = load("products"), load("product_country"), load("product_legacy_map")
     st.header("Buscar producto")
     q = st.text_input("Buscar por nombre, descripción, código global o código legacy", placeholder="ej: proyector 5000, CO ACC55, micrófono shure")
     f1, f2, f3, f4 = st.columns(4)
@@ -150,6 +203,27 @@ elif page == "Buscar producto":
         else:
             r = r[exact]
     st.caption(f"{len(r):,} productos")
+    with st.expander("⬇️ Descargar Excel con los filtros aplicados"):
+        det = st.checkbox("Incluir detalle por sitio (más lento en Supabase)", value=False)
+        if st.button("Generar Excel"):
+            pcf = pc[pc.globalCode.isin(r.globalCode)]
+            if ctry:
+                pcf = pcf[pcf.country.isin(ctry)]
+            sheets = {"productos": r, "disponibilidad_pais": pcf,
+                      "equivalencias_legacy": lm[lm.globalCode.isin(r.globalCode)]}
+            if det:
+                ss = load_stock()
+                ss = ss[ss.globalCode.isin(r.globalCode)]
+                if ctry:
+                    ss = ss[ss.country.isin(ctry)]
+                sheets["detalle_sitio"] = ss
+            filt = {"familia": ", ".join(fam) or "todas", "pais": ", ".join(ctry) or "todos",
+                    "estado": ", ".join(stt) or "todos", "solo_IA": only_ai, "busqueda": q or "",
+                    "productos": len(r), "generado": store.now(), "usuario": user}
+            sheets["filtros"] = pd.DataFrame({"filtro": list(filt), "valor": [str(v) for v in filt.values()]})
+            tag = "_".join(x for x in ["_".join(ctry), "_".join(fam)] if x).replace(" ", "")[:40] or "todos"
+            st.download_button("📥 Descargar", excel_bytes(sheets), file_name=f"productos_{tag}.xlsx",
+                               mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
     show = r[["globalCode", "standardName", "familyName", "categoryName", "manufacturer", "model", "keyAttributeValue",
               "countriesWithStock", "totalStock", "nLegacyIds", "aiFields", "status"]]
     ev = st.dataframe(show, width="stretch", hide_index=True, on_select="rerun", selection_mode="single-row", height=380)
@@ -169,12 +243,17 @@ elif page == "Buscar producto":
             st.markdown("**Códigos legacy equivalentes**")
             st.dataframe(lm[lm.globalCode == row.globalCode][["legacyProductId", "codeCountry", "matchType", "descriptionOriginal", "totalStock"]],
                          hide_index=True, width="stretch")
+            ch = store.read_table("changes", {"legacyProductId": lm[lm.globalCode == row.globalCode].legacyProductId.tolist()})
+            if len(ch):
+                st.markdown("**Historial de cambios**")
+                st.dataframe(ch.sort_values("loadId", ascending=False), hide_index=True, width="stretch")
         with b:
             st.markdown("**Disponibilidad por país**")
             st.dataframe(pc[pc.globalCode == row.globalCode][["country", "totalStock", "nSitesWithStock", "sitesWithStock", "nSitesEnabled"]],
                          hide_index=True, width="stretch")
             st.markdown("**Detalle por sitio**")
-            st.dataframe(pss[pss.globalCode == row.globalCode][["country", "siteName", "siteType", "legacyProductId", "stockQty", "unitCost", "canRent", "canSell"]]
+            det = stock_for([row.globalCode])
+            st.dataframe(det[["country", "siteName", "siteType", "legacyProductId", "stockQty", "unitCost", "canRent", "canSell"]]
                          .sort_values(["country", "stockQty"], ascending=[True, False]), hide_index=True, width="stretch")
 
 
@@ -204,7 +283,7 @@ elif page == "Revisar y editar":
         orig = r[cols].set_index("globalCode"); new = ed.set_index("globalCode")
         canon = lm[lm.matchType == "canonico"].set_index("globalCode").legacyProductId
         allmap = lm.groupby("globalCode").legacyProductId.apply(list)
-        n = 0
+        n, changed_codes = 0, set()
         for code in new.index:
             for f in ["categoria", "manufacturer", "model", "keyAttributeValue", "standardName"]:
                 a, b = orig.at[code, f], new.at[code, f]
@@ -215,10 +294,11 @@ elif page == "Revisar y editar":
                     fc, cc = str(b).split(" · ")[0].split("-")
                     store.save_override(ids, "familyCode", fc, orig.at[code, f], user)
                     store.save_override(ids, "categoryCode", cc, orig.at[code, f], user)
-                    with store.connect() as con:
-                        t = tax.set_index("code").loc[f"{fc}-{cc}"]
-                        con.execute("UPDATE products SET familyCode=?, categoryCode=?, familyName=?, categoryName=?, classificationSource='manual' WHERE globalCode=?",
-                                    (fc, cc, t.familyName, t.categoryName, code))
+                    t = tax.set_index("code").loc[f"{fc}-{cc}"]
+                    store.update("products", {"familyCode": fc, "categoryCode": cc, "familyName": t.familyName,
+                                              "categoryName": t.categoryName, "classificationSource": "manual"},
+                                 {"globalCode": code})
+                    changed_codes.add(code)
                 else:
                     val = None if (pd.isna(b) or str(b).strip() == "") else str(b).strip()
                     if f in ("manufacturer", "model") and val:
@@ -226,16 +306,16 @@ elif page == "Revisar y editar":
                     store.save_override(ids, f, val, a, user)
                     srccol = {"manufacturer": "manufacturerSource", "model": "modelSource",
                               "keyAttributeValue": "keyAttributeSource", "standardName": "nameSource"}[f]
-                    with store.connect() as con:
-                        con.execute(f"UPDATE products SET {f}=?, {srccol}='manual' WHERE globalCode=?", (val, code))
+                    store.update("products", {f: val, srccol: "manual"}, {"globalCode": code})
+                    changed_codes.add(code)
                 n += 1
-        with store.connect() as con:  # recalcula marca de campos IA
-            con.execute("""UPDATE products SET aiFields = trim(
-                 (CASE WHEN classificationSource='ia' THEN 'classification, ' ELSE '' END) ||
-                 (CASE WHEN manufacturerSource='ia' THEN 'manufacturer, ' ELSE '' END) ||
-                 (CASE WHEN modelSource='ia' THEN 'model, ' ELSE '' END) ||
-                 (CASE WHEN keyAttributeSource='ia' THEN 'keyAttribute' ELSE '' END), ', ')""")
-            con.execute("UPDATE products SET needsReview = (classificationSource='sin_clasificar' OR aiFields<>'')")
+        if changed_codes:  # recalcula marca de campos IA en los productos editados
+            cur = store.read_table("products", {"globalCode": list(changed_codes)})
+            for rr in cur.to_dict("records"):
+                af = ai_fields(rr)
+                store.update("products", {"aiFields": af,
+                                          "needsReview": bool(rr["classificationSource"] == "sin_clasificar" or af)},
+                             {"globalCode": rr["globalCode"]})
         refresh()
         st.success(f"{n} cambios guardados como manuales. Si cambiaste la categoría, el código global se reasigna al reprocesar (el anterior queda en el historial).")
 
@@ -260,10 +340,10 @@ elif page == "Duplicados":
     if st.button("💾 Guardar decisiones", type="primary"):
         ch = ed.merge(r[["pairKey", "decision"]], on="pairKey", suffixes=("", "_old"))
         ch = ch[ch.decision != ch.decision_old]
-        with store.connect() as con:
-            con.executemany("INSERT OR REPLACE INTO duplicate_decisions VALUES (?,?,?,?,?)",
-                            [(k, v, user, store.now(), "") for k, v in zip(ch.pairKey, ch.decision)])
-            con.executemany("UPDATE duplicate_candidates SET decision=? WHERE pairKey=?", list(zip(ch.decision, ch.pairKey)))
+        store.upsert("duplicate_decisions", pd.DataFrame({"pairKey": ch.pairKey, "decision": ch.decision,
+                                                          "decidedBy": user, "decidedAt": store.now(), "comment": ""}))
+        for k, v in zip(ch.pairKey, ch.decision):
+            store.update("duplicate_candidates", {"decision": v}, {"pairKey": k})
         refresh()
         st.success(f"{len(ch)} decisiones guardadas.")
 
@@ -304,13 +384,39 @@ elif page == "Crear producto":
             row = pd.DataFrame([{"globalCode": code, "standardName": name, "description": desc, "familyCode": fc, "categoryCode": cc,
                                  "manufacturer": mfr, "model": mdl, "countries": " | ".join(ctry), "createdBy": user,
                                  "createdAt": store.now(), "status": "NUEVO_PENDIENTE_ALTA_R2"}])
-            store.write_table(row, "new_products", if_exists="append")
+            store.insert("new_products", row)
             refresh()
             st.success(f"Producto {code} creado (pendiente de alta en R2).")
     np_ = store.read_table("new_products")
     if len(np_):
         st.subheader("Productos creados desde la app")
         st.dataframe(np_, hide_index=True, width="stretch")
+
+
+# =====================================================================  HISTORIAL
+elif page == "Historial de cargas":
+    st.header("Historial de cargas")
+    st.caption("Cada archivo se registra con su huella (SHA-256): si se vuelve a subir el mismo contenido, aunque tenga otro nombre, "
+               "no se procesa. Las filas idénticas no se duplican; las que cambian se actualizan y el cambio queda registrado.")
+    lo = store.read_table("loads")
+    if lo.empty:
+        st.info("Aún no hay cargas registradas.")
+    else:
+        lo = lo.sort_values("loadId", ascending=False)
+        st.dataframe(lo[["loadId", "fileName", "startedAt", "uploadedBy", "rowsTotal", "rowsNew", "rowsChanged",
+                         "rowsUnchanged", "rowsAbsent", "rowsReappeared", "sitesInFile", "status", "message"]],
+                     hide_index=True, width="stretch")
+        sel = st.selectbox("Ver cambios de la carga", lo.loadId.astype(str) + " · " + lo.fileName)
+        lid = int(sel.split(" · ")[0])
+        ch = store.read_table("changes", {"loadId": lid})
+        st.caption(f"{len(ch):,} cambios registrados en esta carga")
+        if len(ch):
+            c1, c2 = st.columns([1, 3])
+            c1.dataframe(ch.changeType.value_counts().rename("filas"), width="stretch")
+            c2.dataframe(ch.head(2000), hide_index=True, width="stretch")
+            st.download_button("⬇️ Descargar cambios (Excel)", excel_bytes({"cambios": ch}), file_name=f"cambios_{lid}.xlsx")
+    st.subheader("Archivos registrados")
+    st.dataframe(store.read_table("source_files"), hide_index=True, width="stretch")
 
 
 # =====================================================================  CARGAR
@@ -325,14 +431,23 @@ elif page == "Cargar datos / IA":
         st.info(f"Archivo guardado en data/input/{up.name}")
     files = sorted([f.name for f in INPUT.glob("*.xlsx") if not f.name.startswith("~$")])
     target = st.selectbox("Archivo a procesar", files, index=len(files) - 1 if files else 0)
+    force = False
+    if target:
+        import step2b_merge
+        _, prev = step2b_merge.check_file(INPUT / target)
+        if len(prev):
+            pr = prev.iloc[0]
+            st.warning(f"⚠️ Este archivo ya se cargó el {pr.uploadedAt} como '{pr.fileName}' (carga {pr.loadId}). "
+                       "No se volverá a procesar.")
+            force = st.checkbox("Reprocesar de todas formas (no duplica filas; solo recalcula)")
     if st.button("▶️ Ejecutar pipeline", type="primary", disabled=not files):
-        with st.status("Procesando archivo (≈40 s)...", expanded=True) as box:
+        with st.status("Procesando archivo (1-3 min)...", expanded=True) as box:
             box.write("🧹 Limpieza → 🌎 país → 🏷️ clasificación → 🔢 códigos / nombres / duplicados → 💾 BD")
-            res = subprocess.run([sys.executable, str(ROOT / "run_pipeline.py"), str(INPUT / target), "--no-ai"],
-                                 capture_output=True, text=True, cwd=ROOT)
+            cmd = [sys.executable, str(ROOT / "run_pipeline.py"), str(INPUT / target), "--no-ai", "--user", user]
+            res = subprocess.run(cmd + (["--force"] if force else []), capture_output=True, text=True, cwd=ROOT)
             box.code(res.stdout + ("\n" + res.stderr[-2000:] if res.returncode else ""))
-            box.update(label="✅ Archivo procesado" if res.returncode == 0 else "❌ Error al procesar",
-                       state="complete" if res.returncode == 0 else "error")
+            box.update(label={0: "✅ Archivo procesado", 3: "⚠️ Archivo ya cargado: no se procesó"}.get(res.returncode, "❌ Error al procesar"),
+                       state="complete" if res.returncode in (0, 3) else "error")
         refresh()
         if res.returncode == 0 and ai_assist.cfg()["auto"]:
             if ai_assist.available():

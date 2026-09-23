@@ -221,7 +221,7 @@ def run(df: pd.DataFrame | None = None) -> dict:
     newreg["lastSeen"] = ts
     if len(reg):  # conservar historial de códigos no presentes en este archivo
         newreg = pd.concat([newreg, reg[~reg.legacyProductId.isin(newreg.legacyProductId)]])
-    store.write_table(newreg, "code_registry")
+    store.replace_table("code_registry", newreg)
 
     # ---------- tablas de salida
     df = df.merge(p[["legacyProductId", "globalCode"]], on="legacyProductId", how="left")

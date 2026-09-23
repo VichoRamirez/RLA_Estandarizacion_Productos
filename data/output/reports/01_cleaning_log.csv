@@ -100,14 +100,14 @@ manufacturer,SOLID VIEW,SOLIDVIEW,alias fabricante (manufacturer_aliases.csv),27
 manufacturer,YAMAH,YAMAHA,alias fabricante (manufacturer_aliases.csv),23
 manufacturer,TP_LINK,TP-LINK,alias fabricante (manufacturer_aliases.csv),22
 manufacturer,MULTICAISSES,MULTICAISSE,alias fabricante (manufacturer_aliases.csv),21
-manufacturer,BLACKMAGICDESIGN,BLACKMAGIC DESIGN,alias fabricante (manufacturer_aliases.csv),18
 manufacturer,SCAN DISK,SANDISK,alias fabricante (manufacturer_aliases.csv),18
-manufacturer,BEHERINGER,BEHRINGER,alias fabricante (manufacturer_aliases.csv),18
 manufacturer,BLUSTTREAM,BLUSTREAM,alias fabricante (manufacturer_aliases.csv),18
+manufacturer,BEHERINGER,BEHRINGER,alias fabricante (manufacturer_aliases.csv),18
+manufacturer,BLACKMAGICDESIGN,BLACKMAGIC DESIGN,alias fabricante (manufacturer_aliases.csv),18
 manufacturer,AV MATRIX,AVMATRIX,alias fabricante (manufacturer_aliases.csv),16
 manufacturer,ASSUS,ASUS,alias fabricante (manufacturer_aliases.csv),15
-manufacturer,AMERICA NET,AMERICAN NET,alias fabricante (manufacturer_aliases.csv),14
 manufacturer,DA - LITE,DA-LITE,alias fabricante (manufacturer_aliases.csv),14
+manufacturer,AMERICA NET,AMERICAN NET,alias fabricante (manufacturer_aliases.csv),14
 manufacturer,BERINGER,BEHRINGER,alias fabricante (manufacturer_aliases.csv),13
 manufacturer,BRIGHTSING,BRIGHTSIGN,alias fabricante (manufacturer_aliases.csv),11
 manufacturer,TP LINK,TP-LINK,alias fabricante (manufacturer_aliases.csv),11
@@ -118,28 +118,28 @@ manufacturer,SOUNDCRAF,SOUNDCRAFT,alias fabricante (manufacturer_aliases.csv),7
 manufacturer,X-TECH,XTECH,alias fabricante (manufacturer_aliases.csv),7
 manufacturer,TV ONE,TV-ONE,alias fabricante (manufacturer_aliases.csv),6
 manufacturer,ALLEN / HEAT,ALLEN & HEATH,alias fabricante (manufacturer_aliases.csv),6
-manufacturer,CAHUVET,CHAUVET,alias fabricante (manufacturer_aliases.csv),5
 manufacturer,MY CONFERENCE TOOLS,MYCONFERENCETOOLS,alias fabricante (manufacturer_aliases.csv),5
+manufacturer,CAHUVET,CHAUVET,alias fabricante (manufacturer_aliases.csv),5
+manufacturer,INTER M,INTER-M,alias fabricante (manufacturer_aliases.csv),4
+manufacturer,PC TRONIX,PCTRONIX,alias fabricante (manufacturer_aliases.csv),4
+manufacturer,TVONE,TV-ONE,alias fabricante (manufacturer_aliases.csv),4
 manufacturer,DSANº,DSAN,alias fabricante (manufacturer_aliases.csv),4
 manufacturer,BLACK MAGIC DESIGN,BLACKMAGIC DESIGN,alias fabricante (manufacturer_aliases.csv),4
-manufacturer,INTER M,INTER-M,alias fabricante (manufacturer_aliases.csv),4
 manufacturer,U-GREEN,UGREEN,alias fabricante (manufacturer_aliases.csv),4
-manufacturer,TVONE,TV-ONE,alias fabricante (manufacturer_aliases.csv),4
-manufacturer,PC TRONIX,PCTRONIX,alias fabricante (manufacturer_aliases.csv),4
-manufacturer,TUBOSOUND,TURBOSOUND,alias fabricante (manufacturer_aliases.csv),3
 manufacturer,POLAR LIGTH,POLARLIGHT,alias fabricante (manufacturer_aliases.csv),3
+manufacturer,TUBOSOUND,TURBOSOUND,alias fabricante (manufacturer_aliases.csv),3
 manufacturer,TPLINK,TP-LINK,alias fabricante (manufacturer_aliases.csv),3
-manufacturer,ELCTROVOICE,ELECTRO-VOICE,alias fabricante (manufacturer_aliases.csv),2
 manufacturer,DA- LITE,DA-LITE,alias fabricante (manufacturer_aliases.csv),2
-manufacturer,BOSH,BOSCH,alias fabricante (manufacturer_aliases.csv),2
 manufacturer,NUMARCK,NUMARK,alias fabricante (manufacturer_aliases.csv),2
-manufacturer,KINKSTON,KINGSTON,alias fabricante (manufacturer_aliases.csv),2
 manufacturer,LA GAME,LA GAMME,alias fabricante (manufacturer_aliases.csv),2
+manufacturer,ELCTROVOICE,ELECTRO-VOICE,alias fabricante (manufacturer_aliases.csv),2
 manufacturer,GE FORCE,GEFORCE,alias fabricante (manufacturer_aliases.csv),2
+manufacturer,BOSH,BOSCH,alias fabricante (manufacturer_aliases.csv),2
+manufacturer,KINKSTON,KINGSTON,alias fabricante (manufacturer_aliases.csv),2
+manufacturer,MITSUBHISHI,MITSUBISHI,alias fabricante (manufacturer_aliases.csv),1
 manufacturer,EL GATO,ELGATO,alias fabricante (manufacturer_aliases.csv),1
 manufacturer,LITE - PUTER,LITE-PUTER,alias fabricante (manufacturer_aliases.csv),1
 manufacturer,KLIP EXTREME,KLIP XTREME,alias fabricante (manufacturer_aliases.csv),1
-manufacturer,MITSUBHISHI,MITSUBISHI,alias fabricante (manufacturer_aliases.csv),1
 availabilityGroup,mayúsc./tildes variables,MAYÚSCULAS sin tilde,formato,197
 reportGroup,mayúsc./tildes variables,MAYÚSCULAS sin tilde,formato,1932
 reportGroup,LINE ARRY,LINE ARRAY,ortografía (value_corrections.csv),8

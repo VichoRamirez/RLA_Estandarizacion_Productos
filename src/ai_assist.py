@@ -214,10 +214,11 @@ def run(scope: str = "unclassified", limit: int | None = None, notify: Notify = 
                 conf = float(it.get("confianza") or 0)
             except (TypeError, ValueError):
                 conf = 0.0
-            rows.append((lid, fam, catc, it.get("marca") or None, it.get("modelo") or None,
-                         it.get("atributo_clave") or None, conf, it.get("razon"), model, store.now()))
-        with store.connect() as con:
-            con.executemany("INSERT OR REPLACE INTO ai_suggestions VALUES (?,?,?,?,?,?,?,?,?,?)", rows)
+            rows.append({"legacyProductId": lid, "familyCode": fam, "categoryCode": catc,
+                         "manufacturer": it.get("marca") or None, "model": it.get("modelo") or None,
+                         "keyAttributeValue": it.get("atributo_clave") or None, "confidence": conf,
+                         "reasoning": it.get("razon"), "aiModel": model, "createdAt": store.now()})
+        store.upsert("ai_suggestions", pd.DataFrame(rows))
         saved += len(rows)
         notify("info", f"✔️ Lote {b}/{nb} procesado con {model}: {len(rows)} sugerencias")
         if progress:

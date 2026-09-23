@@ -3,3 +3,4 @@ openpyxl>=3.1
 pyarrow>=14
 rapidfuzz>=3.0
 streamlit>=1.45
+requests>=2.31
